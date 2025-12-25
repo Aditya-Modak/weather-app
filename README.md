@@ -34,5 +34,5 @@ To build a modern and responsive weather application using React that fetches re
 ## 🔗 Live Demo
 (To be added)
 
-## 👨‍💻 Author
-Your Name
+## 👨‍💻 Author 
+Aditya Modak (AMMO)
