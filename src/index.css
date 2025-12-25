@@ -1,19 +1,32 @@
+/* Theme Modes */
+:root {
+  font-family: Poppins, Inter, system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
 /* Dark Mode */
 .dark {
   background: #1e1e2f;
   color: #f1f1f1;
 }
 
-.dark h1,
-.dark h2,
-.dark p {
-  color: #f1f1f1;
+.dark .forecastBox {
+  background: #252538;
+  transition: background 0.3s ease;
 }
 
-.dark .card {
+.dark .forecastCard {
   background: #2c2c3e;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.dark .forecastCard:hover {
+  box-shadow: 0 6px 16px rgba(255,255,255,0.08);
+}
+
+/* Utility Toggles */
 .toggle {
   background: transparent;
   border: none;
@@ -22,6 +35,8 @@
   margin-bottom: 10px;
   color: inherit;
 }
+
+/* Loader */
 .loader {
   border: 4px solid #e0e0e0;
   border-top: 4px solid #4a6cf7;
@@ -37,8 +52,61 @@
     transform: rotate(360deg);
   }
 }
-/* ===== Professional Weather Card ===== */
 
+/* Main Container */
+.container {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  background: #fff;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dark .container {
+  background: #2c2c3e;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+/* Welcome / Loading / Error States */
+.welcome,
+.loading,
+.error {
+  margin-top: 16px;
+  font-size: 15px;
+  text-align: center;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.error {
+  color: red;
+  opacity: 1;
+}
+
+/* Weather Card Styles */
+.card {
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+  text-align: center;
+  margin-top: 12px;
+  background: #f7f7f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.dark .card {
+  background: #252538;
+  box-shadow: 0 5px 20px rgba(255,255,255,0.04);
+}
+
+/* Location */
 .location {
   display: flex;
   align-items: baseline;
@@ -56,6 +124,7 @@
   opacity: 0.7;
 }
 
+/* Temperature */
 .temperature {
   display: flex;
   justify-content: center;
@@ -74,23 +143,7 @@
   opacity: 0.8;
 }
 
-.unit-toggle {
-  background: none;
-  border: 1px solid #4a6cf7;
-  color: #4a6cf7;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: all 0.3s;
-}
-
-.unit-toggle:hover {
-  background: #4a6cf7;
-  color: white;
-}
-
+/* Description */
 .description {
   font-size: 14px;
   opacity: 0.85;
@@ -98,6 +151,7 @@
   text-transform: capitalize;
 }
 
+/* Divider */
 .divider {
   height: 1px;
   background: rgba(0, 0, 0, 0.1);
@@ -108,10 +162,12 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Info Grid */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  margin-top: 12px;
 }
 
 .label {
@@ -126,3 +182,71 @@
   margin: 0;
 }
 
+/* Forecast Grid */
+.forecastBox {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f0f4ff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: background 0.3s ease;
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.forecastCard {
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  background: white;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.forecastCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.forecastIcon {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.forecastDate {
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 4px 0;
+}
+
+.forecastTemp {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+.forecastCond {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+/* ===== Mobile First Container ===== */
+.container {
+  width: 100%;
+  max-width: 420px; /* optimized for phones */
+  margin: 0 auto;
+  padding: 16px;
+}
+/* ===== Mobile First Container ===== */
+.container {
+  width: 100%;
+  max-width: 420px; /* optimized for phones */
+  margin: 0 auto;
+  padding: 16px;
+}

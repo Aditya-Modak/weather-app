@@ -1,0 +1,196 @@
+/* =====================
+   WEATHER CARD (MAIN)
+   ===================== */
+.card {
+  background: #f7f7f9;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  max-width: 340px;
+  margin: 20px auto;
+  font-family: "Inter", sans-serif;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* Empty state */
+.card.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 140px;
+  opacity: 0.75;
+  background: #f7f7f9;
+  border-radius: 14px;
+  font-size: 15px;
+}
+
+/* =====================
+   LOCATION & WEATHER
+   ===================== */
+.location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+/* =====================
+   TEMPERATURE SECTION
+   ===================== */
+.temperature {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.temp-value {
+  font-size: 46px;
+  font-weight: 700;
+}
+
+.temp-unit {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* =====================
+   BUTTONS
+   ===================== */
+.unit-toggle,
+.favorite-btn,
+.clear-history-btn {
+  border: 1px solid #4a6cf7;
+  color: #4a6cf7;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 22px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.unit-toggle:hover,
+.favorite-btn:hover,
+.clear-history-btn:hover {
+  background: #4a6cf7;
+  color: white;
+}
+
+/* Favorite city chips */
+.fav-city,
+.history-city {
+  background: #334155;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.fav-city:hover,
+.history-city:hover {
+  background: #3b82f6;
+}
+
+/* =====================
+   WEATHER DETAILS GRID
+   ===================== */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: center;
+}
+
+.label {
+  font-size: 12px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =====================
+   DARK MODE OVERRIDES
+   ===================== */
+.dark .card {
+  background: #2c2c3e;
+  color: #f1f1f1;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.dark .card.empty {
+  background: #252538;
+  color: #ccc;
+}
+
+.dark .divider {
+  background: rgba(255,255,255,0.2);
+}
+
+/* =====================
+   ERROR MESSAGE
+   ===================== */
+.error {
+  text-align: center;
+  color: #ff4d4d;
+  margin-top: 12px;
+  font-weight: 500;
+}
+/* =====================
+   WEATHER CARD CONTROLS
+   ===================== */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.25);
+  color: #2670e8;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.controls button:hover {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.dark .controls button {
+  background: rgba(59,130,246,0.2);
+  border-color: rgba(59,130,246,0.4);
+  color: #93c5fd;
+}
+
+
+ 
