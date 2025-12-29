@@ -1,16 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowUp, Wind, Droplets, Calendar, Compass } from "lucide-react";
-import "../index.css";
+import { ArrowDown, ArrowUp,Calendar,
+ Compass, Wind, Droplets } from "lucide-react";
 import "./Forecast.css";
-
-
-export function convertWindDegToDirection(deg) {
-  if (deg === undefined || deg === null || isNaN(deg)) return "—";
-  const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-  const ix = Math.round(deg / 45) % 8;
-  return dirs[ix];
-}
 
 function getForecastIcon(condition) {
   const map = {
@@ -27,91 +19,68 @@ function getForecastIcon(condition) {
   return map[condition] || "🌍";
 }
 
+function convertWindDegToDirection(deg) {
+  if (deg === undefined || deg === null || isNaN(deg)) return "—";
+  const dirs = ["N","NE","E","SE","S","SW","W","NW"];
+  const ix = Math.round(deg / 45) % 8;
+  return dirs[ix];
+}
+
 export default function Forecast({ forecast = [], unit = "C", onClearHistory }) {
   const safeForecast = Array.isArray(forecast) ? forecast : [];
-
-  const convertTemp = (t) => {
-    if (t === undefined || t === null || isNaN(t)) return "—";
-    return unit === "C" ? t : (t * 9) / 5 + 32;
-  };
+  const convertTemp = (t) => (unit === "C" ? t : (t * 9) / 5 + 32);
 
   return (
-    <motion.div
-      className="forecastBox"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <h2 className="text-center text-xl font-bold mb-4 flex items-center justify-center gap-1">
-        <Calendar size={18}/> 5-Day Forecast
-      </h2>
+    <motion.div className="forecastBox" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
+      <h2 className="text-center text-2xl font-extrabold mb-5 forecast-title">5-Day Forecast</h2>
 
       <div className="forecastGrid">
         {safeForecast.map((day, i) => {
           const temp = Number(day.temp);
           const min = Number(day.temp_min);
           const max = Number(day.temp_max);
-          const humidity = Number(day.humidity);
-          const windSpeed = Number(day.wind);
-          const windDir = convertWindDegToDirection(day.wind_deg);
+          const humidity = day.humidity;
+          const windSpeed = day.wind;
+          const windDeg = day.wind_deg;
+          const windDir = convertWindDegToDirection(windDeg);
+          const compassDir = convertWindDegToDirection(windDeg);
 
           return (
-            <motion.div
-              key={i}
-              className="forecastCard"
-              whileHover={{ scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 120 }}
-            >
-              {/* WEATHER ICON */}
-              <div className="forecastIcon text-center">
-                {getForecastIcon(day.condition)}
-              </div>
+            <motion.div key={i} className="forecastCard" whileHover={{scale:1.03}}>
+              <div className="forecastIcon">{getForecastIcon(day.condition)}</div>
 
-              {/* DATE */}
-              <p className="forecastDate text-center flex items-center justify-center gap-1">
-                <Calendar size={12}/> {day.date || "—"}
+              <p className="forecastDate">
+                <Calendar size={14} className="inline mr-1 text-yellow-600"/>
+                {day.date || "—"}
               </p>
 
-              {/* TEMPERATURE */}
-              <p className="forecastTemp text-center">
-                {isNaN(temp) ? "—" : `${convertTemp(temp).toFixed(1)}°${unit}`}
+              <p className="forecastTemp text-blue-700">
+                🌡 {isNaN(temp) ? "—" : `${convertTemp(temp).toFixed(1)}°${unit}`}
               </p>
 
-              {/* MIN / MAX TEMPERATURE */}
-              <div className="minmax text-center flex items-center justify-center gap-2 mt-2">
-                <span className="inline-flex items-center gap-1">
-                  <ArrowDown size={14}/> {isNaN(min) ? "—" : `${convertTemp(min).toFixed(1)}°`}
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <ArrowUp size={14}/> {isNaN(max) ? "—" : `${convertTemp(max).toFixed(1)}°`}
-                </span>
-                <span className="text-[10px] opacity-60">°{unit}</span>
+              <div className="minmax">
+                <span className="min"><ArrowDown size={14}/> {isNaN(min) ? "—" : `${convertTemp(min).toFixed(1)}°`}</span>
+                <span className="max"><ArrowUp size={14}/> {isNaN(max) ? "—" : `${convertTemp(max).toFixed(1)}°`}</span>
               </div>
 
-              {/* HUMIDITY / WIND / DIRECTION */}
-              <div className="stat-row flex justify-center gap-3 text-xs text-slate-400 mt-3">
-                <span className="inline-flex items-center gap-1">
-                  <Droplets size={12}/> {isNaN(humidity) ? "—" : `${humidity}%`}
-                </span>
+              <div className="stat-row">
+                <span className="humidity"><Droplets size={14} className="text-red-500"/> {humidity}%</span>
+                <span className="wind"><Wind size={14} className="text-blue-500"/> {windSpeed} m/s</span>
+              </div>
 
-                <span className="inline-flex items-center gap-1">
-                  <Wind size={12}/> {isNaN(windSpeed) ? "—" : `${windSpeed} m/s`}
-                </span>
-
-                <span className="inline-flex items-center gap-1">
-                  <Compass size={12}/> {windDir}
-                </span>
+              <div className="direction-row">
+                <Compass size={16} className="text-green-600"/> 
+                <span className="wind-dir">{compassDir}</span>
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* CLEAR HISTORY */}
       {onClearHistory && (
-        <div className="text-center mt-3">
-          <button onClick={onClearHistory} className="clear-history-btn">
-            Clear Search History
+        <div className="text-center">
+          <button onClick={onClearHistory} className="clear-history-btn mt-4">
+            <Trash2 size={16}/> Clear History
           </button>
         </div>
       )}

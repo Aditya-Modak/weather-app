@@ -156,3 +156,45 @@
     padding: 5px 10px;
   }
 }
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px;
+}
+
+/* Mobile-first 2 column layout for small screens */
+@media (max-width: 600px) {
+  .forecastGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 20px;
+  margin-bottom: 26px;
+}
+
+/* Favorite & history sections */
+.favorites-section, .history-section {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px);
+  padding: 14px;
+  border-radius: 18px;
+  margin: 18px auto;
+  border: 1px solid rgba(59,130,246,0.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.dark .favorites-section, .dark .history-section {
+  background: rgba(30,41,59,0.5);
+  border-color: rgba(59,130,246,0.5);
+}

@@ -1,39 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
+  MapPin,
   Wind,
   Droplets,
   Thermometer,
-  Heart,
+  Calendar,
   Compass,
-  MapPin
+  Heart,
+  ArrowDown,
+  ArrowUp
 } from "lucide-react";
 import "./WeatherCard.css";
 
-export function convertWindDegToDirection(deg) {
+
+function getWeatherIcon(condition) {
+  const icons = {
+    clear: "☀️",
+    clouds: "☁️",
+    rain: "🌧️",
+    drizzle: "🌦️",
+    thunderstorm: "⛈️",
+    snow: "❄️",
+    mist: "🌫️",
+    haze: "🌫️",
+    fog: "🌫️",
+  };
+  return icons[condition?.toLowerCase()] || "🌍";
+}
+
+function convertWindDegToDirection(deg) {
   if (deg === undefined || deg === null || isNaN(deg)) return "—";
-  const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  const dirs = ["N","NE","E","SE","S","SW","W","NW"];
   const ix = Math.round(deg / 45) % 8;
   return dirs[ix];
 }
 
-function getWeatherIcon(condition) {
-  const icons = {
-    Clear: "☀️",
-    Clouds: "☁️",
-    Rain: "🌧️",
-    Drizzle: "🌦️",
-    Thunderstorm: "⛈️",
-    Snow: "❄️",
-    Mist: "🌫️",
-    Haze: "🌫️",
-    Fog: "🌫️",
-  };
-  return icons[condition] || "🌍";
-}
-
 export default function WeatherCard({ weather, onFavorite }) {
   const [unit, setUnit] = useState("C");
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("unit") || `"C"`);
+    setUnit(saved);
+  }, []);
+
+  const toggleUnit = () => {
+    const newUnit = unit === "C" ? "F" : "C";
+    localStorage.setItem("unit", JSON.stringify(newUnit));
+    setUnit(newUnit);
+  };
 
   const convertTemp = (t) => {
     if (t === undefined || t === null || isNaN(t)) return NaN;
@@ -49,55 +64,76 @@ export default function WeatherCard({ weather, onFavorite }) {
   }
 
   const temp = convertTemp(weather.temp);
-  const feels = convertTemp(weather.feelsLike);
-  const humidity = Number(weather.humidity);
-  const windSpeed = Number(weather.wind);
-  const windDir = convertWindDegToDirection(weather.wind_deg);
+  const tempMin = convertTemp(weather.temp_min);
+  const tempMax = convertTemp(weather.temp_max);
+  const feels = convertTemp(weather.feels_like);
+  const humidity = weather.humidity;
+  const windSpeed = weather.wind;
+  const windDeg = weather.wind_deg;
+  const windDir = convertWindDegToDirection(windDeg);
 
   return (
     <motion.div className="card" initial={{opacity:0,y:15}} animate={{opacity:1,y:0}}>
 
-      {/* CITY & COUNTRY */}
-      <div className="location">
-        <h2 className="city">{weather.city}</h2>
-        <span className="country">{weather.country}</span>
-      </div>
-
-      {/* WEATHER ICON */}
-      <div className="icon text-center text-5xl">
-        {getWeatherIcon(weather.condition)}
-      </div>
-
-      {/* TEMPERATURE */}
-      <div className="temperature">
-        <span className="temp-value">{isNaN(temp) ? "—" : temp.toFixed(1)}</span>
-        <span className="temp-unit">°{unit}</span>
-      </div>
-
-      {/* CONTROLS */}
-      <div className="controls">
-        <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
-          <Thermometer size={14}/> Toggle °{unit === "C" ? "F" : "C"}
+      <div className="top-controls">
+        <button onClick={toggleUnit} className="unit-toggle">
+          <Thermometer size={14}/> °{unit === "C" ? "F" : "C"}
         </button>
-
-        <button onClick={() => onFavorite(weather.city)}>
+        <button onClick={() => onFavorite?.(weather.city)} className="fav-toggle">
           <Heart size={14}/> Favorite
         </button>
       </div>
 
-      {/* DESCRIPTION */}
-      <p className="description text-center capitalize mt-2">{weather.description}</p>
+      <div className="location">
+        <MapPin size={20} className="pin"/>
+        <h2 className="city">{weather.city}</h2>
+        <span className="country">{weather.country}</span>
+      </div>
+
+      <div className="icon text-center">{getWeatherIcon(weather.condition)}</div>
+
+      <div className="temperature">
+        <span className="temp-value">
+          {isNaN(temp) ? "—" : temp.toFixed(1)}
+        </span>
+        <span className="temp-unit">°{unit}</span>
+      </div>
+
+      <div className="minmax">
+        <span><ArrowDown size={14} className="inline text-blue-400"/> {isNaN(tempMin) ? "—" : tempMin.toFixed(1)}°</span>
+        <span className="mx-2">|</span>
+        <span><ArrowUp size={14} className="inline text-red-400"/> {isNaN(tempMax) ? "—" : tempMax.toFixed(1)}°</span>
+      </div>
+
+      <p className="description">{weather.description}</p>
 
       <div className="divider"></div>
 
-      {/* WEATHER STATS */}
       <div className="info-grid">
-  <div><p className="label">Humidity</p><p className="value"><Droplets size={14}/> {weather.humidity}%</p></div>
-  <div><p className="label">Wind Speed</p><p className="value"><Wind size={14}/> {weather.wind} m/s</p></div>
-  <div><p className="label">Wind Dir</p><p className="value"><Compass size={14}/> {convertWindDegToDirection(weather.wind_deg)}</p></div>
-  <div><p className="label">Feels</p><p className="value"><Thermometer size={14}/> {isNaN(convertTemp(weather.feels_like)) ? "—" : convertTemp(weather.feels_like).toFixed(1)}°{unit}</p></div>
-</div>
+        <div className="stat-item">
+          <Droplets size={16} className="stat-icon blue"/>
+          <span className="label">Humidity</span>
+          <span className="value">{humidity ? `${humidity}%` : "—"}</span>
+        </div>
 
+        <div className="stat-item">
+          <Wind size={16} className="stat-icon lightblue"/>
+          <span className="label">Wind</span>
+          <span className="value">{windSpeed ? `${windSpeed} m/s` : "—"}</span>
+        </div>
+
+        <div className="stat-item">
+          <Compass size={16} className="stat-icon violet"/>
+          <span className="label">Direction</span>
+          <span className="value">{windDir}</span>
+        </div>
+
+        <div className="stat-item">
+          <Thermometer size={16} className="stat-icon gray"/>
+          <span className="label">Feels Like</span>
+          <span className="value">{feels ? `${feels.toFixed(1)}°${unit}` : "—"}</span>
+        </div>
+      </div>
 
     </motion.div>
   );

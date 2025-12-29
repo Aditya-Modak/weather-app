@@ -143,3 +143,166 @@
   margin-top: 6px;
   text-transform: capitalize;
 }
+.forecastBox {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #e0f2fe, #bae6fd);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.forecastCard {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.forecastCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(59,130,246,0.2);
+}
+
+.forecastIcon {
+  font-size: 38px;
+  margin-bottom: 6px;
+}
+
+.forecastTemp {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.minmax {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e40af;
+  margin-top: 8px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 12px;
+  margin-top: 10px;
+  color: #475569;
+}.forecastBox {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #dbeafe, #bfdbfe);
+  width: 100%;
+}
+
+.forecast-title {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 6px;
+}
+
+/* For larger phones/tablets switch to 3 columns */
+@media (min-width: 520px) {
+  .forecastGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* For desktops switch to 5 columns */
+@media (min-width: 900px) {
+  .forecastGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.forecastCard {
+  background: white;
+  padding: 16px 12px;
+  border-radius: 16px;
+  border-top: 4px solid #3b82f6;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.forecastIcon {
+  font-size: 40px;
+  margin-bottom: 6px;
+  animation: float 2.5s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.forecastDate {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e40af;
+  opacity: 0.9;
+}
+
+.forecastTemp {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.minmax {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.min { color: #dc2626; } /* red */
+.max { color: #f59e0b; } /* amber/yellow */
+.stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 12px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.humidity { color: #dc2626; } /* red icon humidity */
+.wind { color: #2563eb; } /* blue icon wind */
+
+.direction-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #047857;
+  margin-top: 10px;
+}
+
+.wind-dir {
+  background: #10b981;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
